@@ -1,3 +1,5 @@
+# Modified version of Blender 2.79b to target ES2 specifically.
+# Helpful for SBCs and other limited hardware. 
 # Maintainer : bartus <arch-user-repoᘓbartus.33mail.com>
 # shellcheck disable=SC2034
 
@@ -11,13 +13,16 @@ _fragment="#branch=blender2.7"
 pkgver=2.79b.r71421.e045fe53f1b
 pkgrel=1
 pkgdesc="3D modeling, animation, rendering and post-productiom. Blender 2.79b targeting ES2"
-arch=('aarch64')
+arch=('i686' 'x86_64' 'aarch64')
 url="https://blender.org/"
 depends=('alembic' 'libgl' 'python' 'python-numpy' 'openjpeg' 'desktop-file-utils' 'hicolor-icon-theme'
          'ffmpeg' 'fftw' 'openal' 'freetype2' 'libxi' 'openimageio' 'opencolorio'
          'openvdb' 'opencollada' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
 makedepends=('git' 'cmake' 'boost' 'mesa' 'llvm')
 ((DISABLE_NINJA)) || makedepends+=('ninja')
+
+# TODO: Re-test at later date.
+# Problematic line. It enforced cuda dependency when it shouldn't have.
 ((DISABLE_CUDA))  && optdepends=('cuda: CUDA support in Cycles') # || makedepends+=('cuda')
 
 options=(!strip)
