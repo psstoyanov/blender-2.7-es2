@@ -40,6 +40,7 @@ source=("git://git.blender.org/blender.git${_fragment}"
         stl_export_iter.patch
         python3.7.patch
         python3.8.patch
+        blender.install
         )
 sha256sums=('SKIP'
             'SKIP'
@@ -50,7 +51,8 @@ sha256sums=('SKIP'
             '28e407e3aefdd9bd76805b6033ada0b5b41dd6183bcf4f58a642c109f10c1876'
             '649c21a12a1bfc0207078e1e58b4813a3e898c6dbbbb35d21e1de7c9e8f1985a'
             '47811284f080e38bcfbfb1f7346279245815a064df092989336b0bf3fe4530e9'
-            '229853b98bb62e1dec835aea6b2eab4c3dabbc8be591206573a3c1b85f10be59')
+            '229853b98bb62e1dec835aea6b2eab4c3dabbc8be591206573a3c1b85f10be59'
+            '91543876474c23ac86e5e72962499ffc23a34aa7d803323aa1eda04151feaaf4')
 
 pkgver() {
   cd "$srcdir/blender"
