@@ -15,7 +15,7 @@ pkgrel=2
 pkgdesc="3D modeling, animation, rendering and post-productiom. Blender 2.79b targeting ES2"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://blender.org/"
-depends=('alembic' 'libgl' 'python' 'python-numpy' 'openjpeg' 'desktop-file-utils' 'hicolor-icon-theme'
+depends=('alembic' 'libgl' 'python' 'python-numpy' 'openjpeg2' 'desktop-file-utils' 'hicolor-icon-theme'
          'ffmpeg' 'fftw' 'openal' 'freetype2' 'libxi' 'openimageio' 'opencolorio'
          'openvdb' 'opencollada' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
 makedepends=('git' 'cmake' 'boost' 'mesa' 'llvm')
