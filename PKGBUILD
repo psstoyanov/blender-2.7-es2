@@ -11,7 +11,7 @@
 pkgname=blender-2.7-es2
 _fragment="#branch=blender2.7"
 pkgver=2.79b.r71421.e045fe53f1b
-pkgrel=2
+pkgrel=3
 pkgdesc="3D modeling, animation, rendering and post-productiom. Blender 2.79b targeting ES2"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://blender.org/"
@@ -105,10 +105,7 @@ build() {
         -DWITH_PYTHON_INSTALL=OFF \
         -DPYTHON_VERSION=${_pyver} \
         -DWITH_LLVM=ON \
-        -DBoost_NO_BOOST_CMAKE=ON \
-        -DBOOST_ROOT=${LIBDIR}/boost \
-        -DBOOST_ROOT=${LIBDIR}/booost/lib/ \
-        -DBooost_NO_SYSTEM_PATHS=ON \
+        -DWITH_BOOST=OFF \
         ${_EXTRAOPTS[@]}
   export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
   ((DISABLE_NINJA)) && make -j$(nproc) || ninja -d stats
