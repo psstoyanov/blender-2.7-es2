@@ -11,7 +11,7 @@
 pkgname=blender-2.7-es2
 _fragment="#branch=blender2.7"
 pkgver=2.79b.r71421.e045fe53f1b
-pkgrel=3
+pkgrel=7
 pkgdesc="3D modeling, animation, rendering and post-productiom. Blender 2.79b targeting ES2"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://blender.org/"
@@ -45,6 +45,10 @@ source=("git://git.blender.org/blender.git${_fragment}"
         stl_export_iter.patch
         python3.7.patch
         python3.8.patch
+        python3.9.patch
+        python3.9_2.patch
+        openvdb7.patch
+        cycles.patch
         blender.install
         )
 sha256sums=('SKIP'
@@ -57,6 +61,10 @@ sha256sums=('SKIP'
             '649c21a12a1bfc0207078e1e58b4813a3e898c6dbbbb35d21e1de7c9e8f1985a'
             '47811284f080e38bcfbfb1f7346279245815a064df092989336b0bf3fe4530e9'
             '229853b98bb62e1dec835aea6b2eab4c3dabbc8be591206573a3c1b85f10be59'
+            'e19c51b99b10b0899f21d4479acfde6803df2777a9b2c772caf2cbb25b790db1'
+            '2a2229383dbe26a2d41c5db86d75f86ad42042f8dbc1713c0e77d9e61b0ab58b'
+            'b05e082b2a8454767e1f3cf4189bb74de29db5669ffe7605f3ddc79f972f5ab4'
+            '0b41af586701409ee044ec44947b26009a6ab306825e8db1e6c322c58b26442e'
             '91543876474c23ac86e5e72962499ffc23a34aa7d803323aa1eda04151feaaf4')
 
 pkgver() {
@@ -71,7 +79,7 @@ prepare() {
   if [ -z "$_cuda_capability" ] && grep -q nvidia <(lsmod); then 
     git apply -v ${srcdir}/SelectCudaComputeArch.patch
   fi
-  git apply -v ${srcdir}/{python3.7,stl_export_iter,python3.8}.patch
+  git apply -v ${srcdir}/{python3.7,stl_export_iter,python3.8,python3.9,python3.9_2,openvdb7,cycles}.patch
 }
 
 build() {
