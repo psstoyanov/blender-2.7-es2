@@ -11,13 +11,13 @@
 pkgname=blender-2.7-es2
 _fragment="#branch=blender2.7"
 pkgver=2.79b.r71421.e045fe53f1b
-pkgrel=7
+pkgrel=9
 pkgdesc="3D modeling, animation, rendering and post-productiom. Blender 2.79b targeting ES2"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://blender.org/"
 depends=('alembic' 'libgl' 'python' 'python-numpy' 'openjpeg2' 'desktop-file-utils' 'hicolor-icon-theme'
-         'ffmpeg' 'fftw' 'openal' 'freetype2' 'libxi' 'openimageio' 'opencolorio'
-         'openvdb' 'opencollada' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
+         'ffmpeg' 'fftw' 'openal' 'freetype2' 'libxi' 'openimageio' 'opencolorio1'
+         'openvdb' 'opencollada' 'openexr' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
 makedepends=('git' 'cmake' 'boost' 'mesa' 'llvm')
 ((DISABLE_NINJA)) || makedepends+=('ninja')
 
@@ -48,6 +48,9 @@ source=("git://git.blender.org/blender.git${_fragment}"
         python3.9.patch
         python3.9_2.patch
         openvdb7.patch
+        openvdb8.patch
+        openexr3.patch
+        opencolorio1.patch
         cycles.patch
         blender.install
         )
@@ -64,6 +67,9 @@ sha256sums=('SKIP'
             'e19c51b99b10b0899f21d4479acfde6803df2777a9b2c772caf2cbb25b790db1'
             '2a2229383dbe26a2d41c5db86d75f86ad42042f8dbc1713c0e77d9e61b0ab58b'
             'b05e082b2a8454767e1f3cf4189bb74de29db5669ffe7605f3ddc79f972f5ab4'
+            'edfd784f8497417660c0b9fdc97893fd0d77764d0bc10f4cb92a9082f41bae75'
+            'ac82cefce56ec1d78abb2116929a288e45caa96176bc5fc04bb020b6a8878339'
+            'ab679b88a7313fd1ae16e0ee5543d16fd2a87390c3800e7e7f33b325a3de25b7'
             '0b41af586701409ee044ec44947b26009a6ab306825e8db1e6c322c58b26442e'
             '91543876474c23ac86e5e72962499ffc23a34aa7d803323aa1eda04151feaaf4')
 
@@ -79,7 +85,7 @@ prepare() {
   if [ -z "$_cuda_capability" ] && grep -q nvidia <(lsmod); then 
     git apply -v ${srcdir}/SelectCudaComputeArch.patch
   fi
-  git apply -v ${srcdir}/{python3.7,stl_export_iter,python3.8,python3.9,python3.9_2,openvdb7,cycles}.patch
+  git apply -v ${srcdir}/{python3.7,stl_export_iter,python3.8,python3.9,python3.9_2,openvdb{7,8},cycles,open{colorio1,exr3}}.patch
 }
 
 build() {
@@ -113,7 +119,7 @@ build() {
         -DWITH_PYTHON_INSTALL=OFF \
         -DPYTHON_VERSION=${_pyver} \
         -DWITH_LLVM=ON \
-        -DWITH_BOOST=OFF \
+        -DWITH_BOOST=ON\
         ${_EXTRAOPTS[@]}
   export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
   ((DISABLE_NINJA)) && make -j$(nproc) || ninja -d stats
